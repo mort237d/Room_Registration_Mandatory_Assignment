@@ -1,17 +1,8 @@
 package com.example.roomregistration_mandatoryassignment.ui.login;
 
 import android.app.Activity;
-
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -23,9 +14,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.roomregistration_mandatoryassignment.R;
-import com.example.roomregistration_mandatoryassignment.ui.login.LoginViewModel;
-import com.example.roomregistration_mandatoryassignment.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -41,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        final String EMAIL = "EMAIL";
+        final String PASSWORD = "PASSWORD";
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -74,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK);
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra(EMAIL, )
                 startActivity(intent);
             }
         });
