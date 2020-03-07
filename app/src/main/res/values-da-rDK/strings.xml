@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Room Registration - Mandatory assignment</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Kodeord</string>
+    <string name="action_sign_in">Log på eller registrer</string>
+    <string name="action_sign_in_short">Log på</string>
+    <string name="welcome">Velkommen!</string>
+    <string name="invalid_password">kodeord skal være længere end 5 karakterer</string>
+    <string name="login_failed">Fejl ved log på</string>
+    <string name="invalid_username">Ugyldigt brugernavn</string>
+</resources>
