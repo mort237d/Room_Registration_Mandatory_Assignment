@@ -18,9 +18,17 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.roomregistration_mandatoryassignment.R;
+import com.example.roomregistration_mandatoryassignment.Room;
+import com.example.roomregistration_mandatoryassignment.RoomService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.roomregistration_mandatoryassignment.ui.login.LoginActivity.EMAIL;
 
@@ -58,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         TextView nav_header_subtitle = findViewById(R.id.nav_header_subtitle);
         String email = intent.getStringExtra(EMAIL);
-        Log.d(TAG, "onCreate: " + email);
         nav_header_subtitle.setText(email);
 
         TextView nav_header_title = findViewById(R.id.nav_header_title);
@@ -79,5 +86,67 @@ public class MainActivity extends AppCompatActivity {
         toast.makeText(this, "Settings!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getAndShowData();
+    }
+
+    private void getAndShowData() {
+        //EditText usernameView = findViewById(R.id.mainUsernameEditText);
+        //String username = usernameView.getText().toString().trim();
+
+        /*if (username.length() == 0) {
+            usernameView.setError("No input");
+            return;
+        }*/
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://anbo-roomreservationv3.azurewebsites.net/api/")
+                // https://futurestud.io/tutorials/retrofit-2-adding-customizing-the-gson-converter
+                // Gson is no longer the default converter
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RoomService roomService = retrofit.create(RoomService.class);
+
+        Call<Room> userCall = roomService.getRoom(1);
+        userCall.enqueue(new Callback<Room>() {
+            @Override
+            public void onResponse(Call<Room> call, Response<Room> response) {
+                // Runs on main/UI thread in Android (not in JVM)
+                // https://square.github.io/retrofit/2.x/retrofit/retrofit2/Callback.html
+                TextView messageView = findViewById(R.id.text_home);
+                if (response.isSuccessful()) {
+                    String message = response.message();
+                    Room room = response.body();
+                    Log.d(TAG, message + " " + room);
+                    messageView.setText(room.getName());
+                } else { // response code not 2xx
+                    if (response.code() == 404) {
+                        messageView.setText("No such room: " + Room.class);
+                    } else {
+                        messageView.setText(String.format("Not working %d %s", response.code(), response.message()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Room> call, Throwable t) { // network problems
+                Log.e(TAG, t.getMessage());
+                // Example: Unable to resolve host "api.github.comkk": No address associated with hostname
+            }
+        });
+        /*
+        try {
+            Response<User> response = user.execute();
+            String message = response.message();
+            Log.d("MINE", message);
+        } catch (IOException e) {
+            Log.d("MINE", e.getMessage());
+        }
+        */
     }
 }

@@ -30,19 +30,19 @@ public class LoginActivity extends AppCompatActivity {
     static final String EMAIL = "EMAIL";
     final String TAG = "MYTAG";
 
+    private EditText usernameEditText;
+    private EditText passwordEditText;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
-        final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
+        usernameEditText = findViewById(R.id.username);
+        passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
-
-
-        final String PASSWORD = "PASSWORD";
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -76,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK);
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                EditText usernameEditText = findViewById(R.id.username);
                 Log.d(TAG, "onChanged: " + usernameEditText.getText().toString());
                 intent.putExtra(EMAIL, usernameEditText.getText().toString());
                 startActivity(intent);
@@ -129,5 +128,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        usernameEditText.setText("");
+        passwordEditText.setText("");
     }
 }
