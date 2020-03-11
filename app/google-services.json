@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "417811347627",
+    "firebase_url": "https://room-registration-2f0e4.firebaseio.com",
+    "project_id": "room-registration-2f0e4",
+    "storage_bucket": "room-registration-2f0e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417811347627:android:4a715a87ae66143f79dfee",
+        "android_client_info": {
+          "package_name": "com.example.roomregistration_mandatoryassignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417811347627-a8g73cufieit0g4ptts7r84ovvle0964.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoF_-sCsyon6iBfHxhxPwIRF7t6DxSzME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417811347627-a8g73cufieit0g4ptts7r84ovvle0964.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

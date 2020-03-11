@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -26,6 +27,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
+    static final String EMAIL = "EMAIL";
+    final String TAG = "MYTAG";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-        final String EMAIL = "EMAIL";
+
         final String PASSWORD = "PASSWORD";
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -72,7 +76,9 @@ public class LoginActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK);
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra(EMAIL, )
+                EditText usernameEditText = findViewById(R.id.username);
+                Log.d(TAG, "onChanged: " + usernameEditText.getText().toString());
+                intent.putExtra(EMAIL, usernameEditText.getText().toString());
                 startActivity(intent);
             }
         });
@@ -116,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        String welcome = getString(R.string.welcome) + " " + model.getDisplayName();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
