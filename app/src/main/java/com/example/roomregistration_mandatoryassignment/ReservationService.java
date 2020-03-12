@@ -1,5 +1,7 @@
 package com.example.roomregistration_mandatoryassignment;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -10,7 +12,7 @@ import retrofit2.http.Path;
 
 public interface ReservationService {
     @GET("Reservations")
-    Call<Reservation> getAllReservations();
+    Call<List<Reservation>> getAllReservations();
 
     @POST("Reservations")
     @FormUrlEncoded

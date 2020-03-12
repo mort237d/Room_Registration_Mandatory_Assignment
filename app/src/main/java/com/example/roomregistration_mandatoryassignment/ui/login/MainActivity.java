@@ -17,12 +17,15 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.roomregistration_mandatoryassignment.ApiUtils;
 import com.example.roomregistration_mandatoryassignment.R;
 import com.example.roomregistration_mandatoryassignment.Room;
 import com.example.roomregistration_mandatoryassignment.RoomService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -91,7 +94,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        getAndShowData();
+        //getAndShowData();
+        getAndShowAllRooms();
+    }
+
+    private void getAndShowAllRooms() {//TODO Try this!!!
+        RoomService roomService = ApiUtils.getRoomService();
+        Call<List<Room>> getAllRoomsCall = roomService.getAllRooms();
+        getAllRoomsCall.enqueue(new Callback<List<Room>>() {
+            @Override
+            public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
+                if (response.isSuccessful()) {
+                    List<Room> allBooks = response.body();
+                    Log.d(TAG, allBooks.toString());
+                    //populateRecyclerView(allBooks);
+                } else {
+                    String message = "Problem " + response.code() + " " + response.message();
+                    Log.d(TAG, message);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Room>> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
     }
 
     private void getAndShowData() {
@@ -105,19 +132,14 @@ public class MainActivity extends AppCompatActivity {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://anbo-roomreservationv3.azurewebsites.net/api/")
-                // https://futurestud.io/tutorials/retrofit-2-adding-customizing-the-gson-converter
-                // Gson is no longer the default converter
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+                .addConverterFactory(GsonConverterFactory.create()).build();
 
         RoomService roomService = retrofit.create(RoomService.class);
 
-        Call<Room> userCall = roomService.getRoom(1);
-        userCall.enqueue(new Callback<Room>() {
+        Call<Room> roomCall = roomService.getRoom(1);
+        roomCall.enqueue(new Callback<Room>() {
             @Override
             public void onResponse(Call<Room> call, Response<Room> response) {
-                // Runs on main/UI thread in Android (not in JVM)
-                // https://square.github.io/retrofit/2.x/retrofit/retrofit2/Callback.html
                 TextView messageView = findViewById(R.id.text_home);
                 if (response.isSuccessful()) {
                     String message = response.message();
@@ -125,28 +147,15 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, message + " " + room);
                     messageView.setText(room.getName());
                 } else { // response code not 2xx
-                    if (response.code() == 404) {
-                        messageView.setText("No such room: " + Room.class);
-                    } else {
-                        messageView.setText(String.format("Not working %d %s", response.code(), response.message()));
-                    }
+                    if (response.code() == 404) messageView.setText("No such room: " + response.code() + " : " + response.message());
+                    else messageView.setText(String.format("Not working %d %s", response.code(), response.message()));
                 }
             }
 
             @Override
             public void onFailure(Call<Room> call, Throwable t) { // network problems
                 Log.e(TAG, t.getMessage());
-                // Example: Unable to resolve host "api.github.comkk": No address associated with hostname
             }
         });
-        /*
-        try {
-            Response<User> response = user.execute();
-            String message = response.message();
-            Log.d("MINE", message);
-        } catch (IOException e) {
-            Log.d("MINE", e.getMessage());
-        }
-        */
     }
 }
