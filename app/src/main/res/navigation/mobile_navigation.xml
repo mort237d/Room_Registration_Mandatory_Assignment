@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.roomregistration_mandatoryassignment.ui.login.ui.home.HomeFragment"
+        android:name="com.example.roomregistration_mandatoryassignment.ui.home.HomeFragment"
         android:label="@string/menu_book_a_room"
         tools:layout="@layout/fragment_home">
 
@@ -17,7 +17,7 @@
     </fragment>
     <!--<fragment
         android:id="@+id/nav_home_second"
-        android:name="com.example.roomregistration_mandatoryassignment.ui.login.ui.home.HomeSecondFragment"
+        android:name="com.example.roomregistration_mandatoryassignment.ui.home.HomeSecondFragment"
         android:label="@string/home_second"
         tools:layout="@layout/fragment_home_second">
         <action
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.roomregistration_mandatoryassignment.ui.login.ui.gallery.GalleryFragment"
+        android:name="com.example.roomregistration_mandatoryassignment.ui.gallery.GalleryFragment"
         android:label="@string/menu_my_reserved_rooms"
         tools:layout="@layout/fragment_gallery" />
 </navigation>

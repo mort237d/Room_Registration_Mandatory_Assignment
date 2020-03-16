@@ -1,4 +1,4 @@
-package com.example.roomregistration_mandatoryassignment.ui.login;
+package com.example.roomregistration_mandatoryassignment;
 
 import android.os.Bundle;
 

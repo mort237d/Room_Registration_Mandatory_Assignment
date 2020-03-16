@@ -1,4 +1,4 @@
-package com.example.roomregistration_mandatoryassignment.ui.login.ui.gallery;
+package com.example.roomregistration_mandatoryassignment.ui.gallery;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -15,23 +15,32 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.roomregistration_mandatoryassignment.MainActivity;
 import com.example.roomregistration_mandatoryassignment.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
-    static final String EMAIL = "EMAIL";
+    public static final String EMAIL = "EMAIL";
     final String TAG = "MYTAG";
 
     private EditText usernameEditText;
     private EditText passwordEditText;
+    private ProgressBar loadingProgressBar;
+
+    public static FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        loadingProgressBar = findViewById(R.id.loading);
+
+        mAuth = FirebaseAuth.getInstance();
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -74,11 +85,6 @@ public class LoginActivity extends AppCompatActivity {
                     updateUiWithUser(loginResult.getSuccess());
                 }
                 setResult(Activity.RESULT_OK);
-
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                Log.d(TAG, "onChanged: " + usernameEditText.getText().toString());
-                intent.putExtra(EMAIL, usernameEditText.getText().toString());
-                startActivity(intent);
             }
         });
 
@@ -115,15 +121,41 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+
+                FirebaseLogin();
             }
         });
+    }
+
+    private void FirebaseLogin() {
+        mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(), passwordEditText.getText().toString())
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithEmail:success");
+                            //FirebaseUser user = mAuth.getCurrentUser();
+                            loginViewModel.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                            usernameEditText.setText("");
+                            passwordEditText.setText("");
+                        } else {
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            loadingProgressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + " " + model.getDisplayName();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Log.d(TAG, "onChanged: " + usernameEditText.getText().toString());
+        intent.putExtra(EMAIL, usernameEditText.getText().toString());
+        startActivity(intent);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
@@ -131,9 +163,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        usernameEditText.setText("");
-        passwordEditText.setText("");
+    public void onStart() {
+        super.onStart();
+        usernameEditText.setText("mort237d@edu.easj.dk");
+        passwordEditText.setText("123456");
     }
 }

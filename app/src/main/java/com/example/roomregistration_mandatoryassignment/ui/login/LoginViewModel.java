@@ -1,15 +1,15 @@
 package com.example.roomregistration_mandatoryassignment.ui.login;
 
+import android.util.Patterns;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import android.util.Patterns;
-
+import com.example.roomregistration_mandatoryassignment.R;
 import com.example.roomregistration_mandatoryassignment.data.LoginRepository;
 import com.example.roomregistration_mandatoryassignment.data.Result;
 import com.example.roomregistration_mandatoryassignment.data.model.LoggedInUser;
-import com.example.roomregistration_mandatoryassignment.R;
 
 public class LoginViewModel extends ViewModel {
 
@@ -30,7 +30,6 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(String username, String password) {
-        // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {

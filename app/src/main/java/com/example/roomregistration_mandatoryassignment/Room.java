@@ -3,7 +3,9 @@ package com.example.roomregistration_mandatoryassignment;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -58,5 +60,16 @@ public class Room {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", capacity=" + capacity +
+                ", remarks='" + remarks + '\'' +
+                '}';
     }
 }

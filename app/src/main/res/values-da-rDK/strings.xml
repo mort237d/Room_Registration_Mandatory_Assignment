@@ -14,4 +14,5 @@
     <string name="action_settings">Indstillinger</string>
     <string name="title_activity_settings">Indstillinger</string>
     <string name="messages_header">Beskeder</string>
+    <string name="sign_out">Log ud</string>
 </resources>

@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="morten@edu.easj.dk"
+        android:text="mort237d@edu.easj.dk"
         android:textColor="@color/colorTextDark"
         android:textColorHint="@color/colorTextDark"
         android:backgroundTint="@color/colorTextDark"/>
@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username"
-        android:text="dsgrhyjrygh"
+        android:text="123456"
         android:textColor="@color/colorTextDark"
         android:textColorHint="@color/colorTextDark"
         android:backgroundTint="@color/colorTextDark"/>

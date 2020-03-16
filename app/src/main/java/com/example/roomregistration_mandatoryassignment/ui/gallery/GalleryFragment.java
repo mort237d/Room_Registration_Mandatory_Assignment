@@ -1,4 +1,4 @@
-package com.example.roomregistration_mandatoryassignment.ui.login.ui.gallery;
+package com.example.roomregistration_mandatoryassignment.ui.gallery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

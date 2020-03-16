@@ -1,4 +1,4 @@
-package com.example.roomregistration_mandatoryassignment.ui.login;
+package com.example.roomregistration_mandatoryassignment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,26 +17,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.roomregistration_mandatoryassignment.ApiUtils;
-import com.example.roomregistration_mandatoryassignment.R;
-import com.example.roomregistration_mandatoryassignment.Room;
-import com.example.roomregistration_mandatoryassignment.RoomService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseUser;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.example.roomregistration_mandatoryassignment.ui.login.LoginActivity.EMAIL;
+import static com.example.roomregistration_mandatoryassignment.ui.login.LoginActivity.mAuth;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String EMAIL = "EMAIL";
     private AppBarConfiguration mAppBarConfiguration;
 
     private final String TAG = "MYTAG";
@@ -94,68 +84,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //getAndShowData();
-        getAndShowAllRooms();
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Log.d(TAG, "Main onStart: " + currentUser.getEmail());
+        //updateUI(currentUser);
     }
 
-    private void getAndShowAllRooms() {//TODO Try this!!!
-        RoomService roomService = ApiUtils.getRoomService();
-        Call<List<Room>> getAllRoomsCall = roomService.getAllRooms();
-        getAllRoomsCall.enqueue(new Callback<List<Room>>() {
-            @Override
-            public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
-                if (response.isSuccessful()) {
-                    List<Room> allBooks = response.body();
-                    Log.d(TAG, allBooks.toString());
-                    //populateRecyclerView(allBooks);
-                } else {
-                    String message = "Problem " + response.code() + " " + response.message();
-                    Log.d(TAG, message);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Room>> call, Throwable t) {
-                Log.e(TAG, t.getMessage());
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAuth.signOut();
     }
 
-    private void getAndShowData() {
-        //EditText usernameView = findViewById(R.id.mainUsernameEditText);
-        //String username = usernameView.getText().toString().trim();
-
-        /*if (username.length() == 0) {
-            usernameView.setError("No input");
-            return;
-        }*/
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://anbo-roomreservationv3.azurewebsites.net/api/")
-                .addConverterFactory(GsonConverterFactory.create()).build();
-
-        RoomService roomService = retrofit.create(RoomService.class);
-
-        Call<Room> roomCall = roomService.getRoom(1);
-        roomCall.enqueue(new Callback<Room>() {
-            @Override
-            public void onResponse(Call<Room> call, Response<Room> response) {
-                TextView messageView = findViewById(R.id.text_home);
-                if (response.isSuccessful()) {
-                    String message = response.message();
-                    Room room = response.body();
-                    Log.d(TAG, message + " " + room);
-                    messageView.setText(room.getName());
-                } else { // response code not 2xx
-                    if (response.code() == 404) messageView.setText("No such room: " + response.code() + " : " + response.message());
-                    else messageView.setText(String.format("Not working %d %s", response.code(), response.message()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Room> call, Throwable t) { // network problems
-                Log.e(TAG, t.getMessage());
-            }
-        });
+    public void signOut(View view) {
+        mAuth.signOut();
+        finish();
     }
 }
