@@ -81,7 +81,10 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecyclerViewSimpleAdapter adapter = new RecyclerViewSimpleAdapter(getActivity(), allRooms);
         recyclerView.setAdapter(adapter);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
     }
 
     private void getAndShowData() {

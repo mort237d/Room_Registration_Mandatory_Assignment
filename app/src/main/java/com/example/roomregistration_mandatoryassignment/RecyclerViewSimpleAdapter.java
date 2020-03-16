@@ -1,18 +1,18 @@
 package com.example.roomregistration_mandatoryassignment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerViewSimpleAdapter<T>.ViewHolder> {
     private static final String LOG_TAG = "ROOMS";
@@ -41,12 +41,20 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
         Log.d(LOG_TAG, "onBindViewHolder " + data.toString());
         Log.d(LOG_TAG, "onBindViewHolder called " + position);
 
+        Room room = (Room) data.get(position);
+        holder.roomName.setText(room.toString());
+
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: " + data.get(position));
+                Log.d(LOG_TAG, "onClick: " + data.get(position));
 
-                //Toast.makeText(mContext, (Integer) data.get(position), Toast.LENGTH_SHORT).show();
+                Room room = (Room) data.get(position);
+                Log.d(LOG_TAG, room.toString());
+                Intent intent = new Intent(v.getContext(), SingleRoomActivity.class);
+                intent.putExtra(SingleRoomActivity.ROOM, room);
+                Log.d(LOG_TAG, "putExtra " + room.toString());
+                mContext.startActivity(intent);
             }
         });
     }
@@ -60,10 +68,12 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         RelativeLayout parentLayout;
+        TextView roomName;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             parentLayout = itemView.findViewById(R.id.parent_layout);
+            roomName = itemView.findViewById(R.id.room_name);
         }
     }
 }
