@@ -130,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
     private void FirebaseLogin() {
         mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(), passwordEditText.getText().toString())
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    TextView failedLogin = findViewById(R.id.failedLoginTextView);
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -138,10 +139,13 @@ public class LoginActivity extends AppCompatActivity {
                             loginViewModel.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
                             usernameEditText.setText("");
                             passwordEditText.setText("");
+                            failedLogin.setVisibility(View.GONE);
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             loadingProgressBar.setVisibility(View.GONE);
+
+                            failedLogin.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -167,5 +171,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         usernameEditText.setText("mort237d@edu.easj.dk");
         passwordEditText.setText("123456");
+
+        Button loginButton = findViewById(R.id.login); //TODO Remove these two lines
+        loginButton.performClick();
     }
 }
