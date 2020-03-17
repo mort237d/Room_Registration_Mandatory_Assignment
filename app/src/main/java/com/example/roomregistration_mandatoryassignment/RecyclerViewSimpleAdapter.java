@@ -41,22 +41,28 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
         Log.d(LOG_TAG, "onBindViewHolder " + data.toString());
         Log.d(LOG_TAG, "onBindViewHolder called " + position);
 
-        Room room = (Room) data.get(position);
-        holder.roomName.setText(room.toString());
+        if (dataItem.getClass() == Room.class){
+            Room room = (Room) data.get(position);
+            holder.roomName.setText(room.toString());
 
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(LOG_TAG, "onClick: " + data.get(position));
+            holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(LOG_TAG, "onClick: " + data.get(position));
 
-                Room room = (Room) data.get(position);
-                Log.d(LOG_TAG, room.toString());
-                Intent intent = new Intent(v.getContext(), SingleRoomActivity.class);
-                intent.putExtra(SingleRoomActivity.ROOM, room);
-                Log.d(LOG_TAG, "putExtra " + room.toString());
-                mContext.startActivity(intent);
-            }
-        });
+                    Room room = (Room) data.get(position);
+                    Log.d(LOG_TAG, room.toString());
+                    Intent intent = new Intent(v.getContext(), SingleRoomActivity.class);
+                    intent.putExtra(SingleRoomActivity.ROOM, room);
+                    Log.d(LOG_TAG, "putExtra " + room.toString());
+                    mContext.startActivity(intent);
+                }
+            });
+        }
+        else if (dataItem.getClass() == Reservation.class){
+            Reservation reservation = (Reservation) data.get(position);
+            holder.roomName.setText(reservation.toString());
+        }
     }
 
     @Override

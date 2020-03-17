@@ -3,7 +3,9 @@ package com.example.roomregistration_mandatoryassignment;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Reservation {
+import java.io.Serializable;
+
+public class Reservation implements Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -69,5 +71,17 @@ public class Reservation {
 
     public void setRoomId(Integer roomId) {
         this.roomId = roomId;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", fromTime=" + fromTime +
+                ", toTime=" + toTime +
+                ", userId='" + userId + '\'' +
+                ", purpose='" + purpose + '\'' +
+                ", roomId=" + roomId +
+                '}';
     }
 }
