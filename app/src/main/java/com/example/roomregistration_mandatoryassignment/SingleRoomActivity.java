@@ -24,7 +24,7 @@ public class SingleRoomActivity extends AppCompatActivity {
 
         Log.d(LOG_TAG, originalRoom.toString());
         TextView headingView = findViewById(R.id.singleRoomHeadingTextview);
-        headingView.setText("Room Id=" + originalRoom.getId());
+        headingView.setText("Room: " + originalRoom.getName());
     }
 
     public void backButtonClicked(View view) {

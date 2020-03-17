@@ -81,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void MenuItemSignOut(MenuItem item) {
+        mAuth.signOut();
+        finish();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
