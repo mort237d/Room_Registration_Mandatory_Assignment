@@ -21,4 +21,9 @@
         <item name="android:textColor">@color/colorTextDark</item>
     </style>
 
+    <style name="ItemListTextView">
+        <item name="android:textColor">@color/colorTextDark</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
 </resources>

@@ -12,7 +12,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerViewSimpleAdapter<T>.ViewHolder> {
     private static final String LOG_TAG = "ROOMS";
@@ -43,7 +51,11 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
 
         if (dataItem.getClass() == Room.class){
             Room room = (Room) data.get(position);
-            holder.roomName.setText(room.toString());
+            holder.roomName.setText(room.getName());
+            holder.capacityOrUser.setText("# " + room.getCapacity());
+            if (room.getRemarks() != null) holder.remarksOrTime.setText("✎ \"" + room.getRemarks() + "\"");
+            else holder.remarksOrTime.setText("✎ \"No remarks\"");
+            holder.descriptionOrPurpose.setText("✎ \"" + room.getDescription() + "\"");
 
             holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -61,7 +73,31 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
         }
         else if (dataItem.getClass() == Reservation.class){
             Reservation reservation = (Reservation) data.get(position);
-            holder.roomName.setText(reservation.toString());
+
+            RoomService roomService = ApiUtils.getRoomService();
+            Call<Room> GetRoom = roomService.getRoom(reservation.getRoomId());
+            GetRoom.enqueue(new Callback<Room>(){
+
+                @Override
+                public void onResponse(Call<Room> call, Response<Room> response) {
+                    Room room = response.body();
+                    holder.roomName.setText("Reservation of " + room.getName());
+                }
+
+                @Override
+                public void onFailure(Call<Room> call, Throwable t) {
+                    Log.e(TAG, "onFailure: ");
+                }
+            });
+
+            holder.capacityOrUser.setText("☺ \"" + reservation.getUserId() + "\"");
+
+            String pattern = "MM-dd-yyyy HH:mm:ss";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String fromTime = simpleDateFormat.format(new Date((long) reservation.getFromTime()*1000));
+            String toTime = simpleDateFormat.format(new Date((long) reservation.getToTime()*1000));
+            holder.remarksOrTime.setText("⏱ " + fromTime + " --> " + toTime);
+            holder.descriptionOrPurpose.setText("✎ \"" + reservation.getPurpose() + "\"");
         }
     }
 
@@ -75,11 +111,17 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
     public class ViewHolder extends RecyclerView.ViewHolder{
         RelativeLayout parentLayout;
         TextView roomName;
+        TextView capacityOrUser;
+        TextView remarksOrTime;
+        TextView descriptionOrPurpose;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             parentLayout = itemView.findViewById(R.id.parent_layout);
             roomName = itemView.findViewById(R.id.room_name);
+            capacityOrUser = itemView.findViewById(R.id.capacity_or_user);
+            remarksOrTime = itemView.findViewById(R.id.remarks_or_time);
+            descriptionOrPurpose = itemView.findViewById(R.id.description_or_purpose);
         }
     }
 }

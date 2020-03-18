@@ -1,14 +1,14 @@
-package com.example.roomregistration_mandatoryassignment.ui.home;
+package com.example.roomregistration_mandatoryassignment.ui.AllRooms;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class AllRoomsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public AllRoomsViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }

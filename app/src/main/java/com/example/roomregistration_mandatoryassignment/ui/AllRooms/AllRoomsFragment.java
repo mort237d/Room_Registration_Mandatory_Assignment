@@ -1,4 +1,4 @@
-package com.example.roomregistration_mandatoryassignment.ui.home;
+package com.example.roomregistration_mandatoryassignment.ui.AllRooms;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -26,19 +26,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class AllRoomsFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private AllRoomsViewModel allRoomsViewModel;
     private RecyclerView recyclerView;
     private View root;
 
     private final String TAG = "MYTAG";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-        root = inflater.inflate(R.layout.fragment_home, container, false);
+        allRoomsViewModel = ViewModelProviders.of(this).get(AllRoomsViewModel.class);
+        root = inflater.inflate(R.layout.fragment_all_rooms, container, false);
         recyclerView = root.findViewById(R.id.mainRecyclerView);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        allRoomsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
             }

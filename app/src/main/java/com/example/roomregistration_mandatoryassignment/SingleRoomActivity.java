@@ -48,8 +48,8 @@ public class SingleRoomActivity extends AppCompatActivity {
 
     private void getAndShowAllReservationsForRoom() {
         ReservationService reservationService = ApiUtils.getReservationService();
-        Call<List<Reservation>> getAllRoomsCall = reservationService.getAllReservations();
-        getAllRoomsCall.enqueue(new Callback<List<Reservation>>() {
+        Call<List<Reservation>> getAllReservationsCall = reservationService.getReservationsByRoomId(originalRoom.getId());
+        getAllReservationsCall.enqueue(new Callback<List<Reservation>>() {
             @Override
             public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
                 if (response.isSuccessful()) {
@@ -70,9 +70,9 @@ public class SingleRoomActivity extends AppCompatActivity {
         });
     }
 
-    private void populateRecyclerView(List<Reservation> allRooms) {
+    private void populateRecyclerView(List<Reservation> allReservations) {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerViewSimpleAdapter adapter = new RecyclerViewSimpleAdapter(this, allRooms);
+        RecyclerViewSimpleAdapter adapter = new RecyclerViewSimpleAdapter(this, allReservations);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
