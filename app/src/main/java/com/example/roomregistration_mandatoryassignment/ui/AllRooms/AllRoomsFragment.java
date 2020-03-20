@@ -58,18 +58,6 @@ public class AllRoomsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     List<Room> allRooms = response.body();
                     Log.d(TAG, allRooms.toString());
-
-                    // Fill to test scroll [START]
-                    allRooms.add(new Room());
-                    allRooms.add(new Room());
-                    allRooms.add(new Room());
-                    allRooms.add(new Room());
-                    allRooms.add(new Room());
-                    allRooms.add(new Room());
-                    allRooms.add(new Room());
-                    allRooms.add(new Room());
-                    // Fill to test scroll [END]
-
                     populateRecyclerView(allRooms);
                 } else {
                     String message = "Problem " + response.code() + " " + response.message();

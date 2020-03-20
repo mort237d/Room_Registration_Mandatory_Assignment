@@ -35,8 +35,7 @@ public class MyReservationsFragment extends Fragment {
     private View root;
     private RecyclerView recyclerView;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myReservationsViewModel =
                 ViewModelProviders.of(this).get(MyReservationsViewModel.class);
         root = inflater.inflate(R.layout.fragment_my_reservations, container, false);
@@ -50,6 +49,12 @@ public class MyReservationsFragment extends Fragment {
         getAndShowAllReservationsForUser();
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAndShowAllReservationsForUser();
     }
 
     private void getAndShowAllReservationsForUser() {
@@ -83,4 +88,6 @@ public class MyReservationsFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
+
+
 }

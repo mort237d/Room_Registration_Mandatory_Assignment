@@ -98,4 +98,9 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signOut();
         finish();
     }
+
+    public void AddReservationIntent(View view) {
+        Intent intent = new Intent(this, AddReservationActivity.class);
+        startActivity(intent);
+    }
 }

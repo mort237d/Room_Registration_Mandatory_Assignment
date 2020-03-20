@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,29 +8,38 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/datePickerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Pick datetime"
-        android:onClick="DatePicker"/>
+        android:onClick="DatePicker"
+        android:layout_alignParentTop="true"/>
 
-    <LinearLayout
+    <ToggleButton
+        android:id="@+id/bookedToggleButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ToggleButton
-            android:id="@+id/bookedToggleButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textOn="not booked"
-            android:textOff="booked"
-            android:onClick="Booked"/>
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:textOn="not booked"
+        android:textOff="booked"
+        android:onClick="Booked"
+        android:layout_below="@+id/datePickerButton"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/singleRoomRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bookedToggleButton"/>
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        android:onClick="AddReservationFromRoomsIntent"/>
+
+</RelativeLayout>

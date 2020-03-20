@@ -142,7 +142,7 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
-                                Log.d(LOG_TAG, String.valueOf(response.isSuccessful()));
+                                Log.d(LOG_TAG, "onResponse DELETE: " + String.valueOf(response.isSuccessful()));
 
                                 data.remove(position);
                                 notifyItemRemoved(position);

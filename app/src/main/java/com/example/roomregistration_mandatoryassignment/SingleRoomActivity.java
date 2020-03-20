@@ -132,4 +132,10 @@ public class SingleRoomActivity extends AppCompatActivity{
 
         getAndShowAllReservationsForDate();
     }
+
+    public void AddReservationFromRoomsIntent(View view) {
+        Intent intent = new Intent(this, AddReservationActivity.class);
+        intent.putExtra("EXTRA", originalRoom.getId());
+        startActivity(intent);
+    }
 }

@@ -3,10 +3,10 @@ package com.example.roomregistration_mandatoryassignment;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -14,11 +14,15 @@ public interface ReservationService{
     @GET("Reservations")
     Call<List<Reservation>> getAllReservations();
 
-    @POST("Reservations")
+    /*@POST("Reservations")
     @FormUrlEncoded
     Call<Reservation> postReservation(@Field("Id") int id, @Field("FromTime") int fromTime,
                                       @Field("ToTime") int toTime, @Field("UserId") String userId,
-                                      @Field("Purpose") String purpose, @Field("RoomId") int roomId);
+                                      @Field("Purpose") String purpose, @Field("RoomId") int roomId);*/
+
+    @Headers("Content-Type: application/json")
+    @POST("Reservations")
+    Call<Reservation> postReservation(@Body Reservation reservation);
 
     @GET("Reservations/{id}")
     Call<Reservation> getReservation(@Path("id") int id);
