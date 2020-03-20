@@ -17,9 +17,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseUser;
 
 import static com.example.roomregistration_mandatoryassignment.ui.login.LoginActivity.mAuth;
@@ -37,11 +35,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();}
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -62,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         nav_header_subtitle.setText(email);
 
         TextView nav_header_title = findViewById(R.id.nav_header_title);
-        email = email.substring(0, email.length() - "@edu.easj.dk".length());
+        email = email.substring(email.indexOf('@'));
         nav_header_title.setText(email);
         return true;
     }
@@ -90,10 +83,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Log.d(TAG, "Main onStart: " + currentUser.getEmail());
-        //updateUI(currentUser);
     }
 
 

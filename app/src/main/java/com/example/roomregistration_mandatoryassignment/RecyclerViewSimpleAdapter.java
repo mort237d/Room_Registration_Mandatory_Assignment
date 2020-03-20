@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,10 +21,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
+import static com.example.roomregistration_mandatoryassignment.ui.login.LoginActivity.mAuth;
 
 public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerViewSimpleAdapter<T>.ViewHolder> {
-    private static final String LOG_TAG = "ROOMS";
+    private static final String LOG_TAG = "RECYCLERVIEWADAPTER";
     private final List<T> data;
     private final int viewId = View.generateViewId();
 
@@ -32,7 +33,7 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
     public RecyclerViewSimpleAdapter(Context mContext, List<T> data) {
         this.mContext = mContext;
         this.data = data;
-        Log.d(LOG_TAG, data.toString());
+        //Log.d(LOG_TAG, data.toString());
     }
 
     @Override
@@ -46,8 +47,6 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         T dataItem = data.get(position);
-        Log.d(LOG_TAG, "onBindViewHolder " + data.toString());
-        Log.d(LOG_TAG, "onBindViewHolder called " + position);
 
         if (dataItem.getClass() == Room.class){
             Room room = (Room) data.get(position);
@@ -86,7 +85,7 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
 
                 @Override
                 public void onFailure(Call<Room> call, Throwable t) {
-                    Log.e(TAG, "onFailure: ");
+                    Log.e(LOG_TAG, "onFailure: ");
                 }
             });
 
@@ -96,8 +95,13 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             String fromTime = simpleDateFormat.format(new Date((long) reservation.getFromTime()*1000));
             String toTime = simpleDateFormat.format(new Date((long) reservation.getToTime()*1000));
-            holder.remarksOrTime.setText("⏱ " + fromTime + " --> " + toTime);
+            holder.remarksOrTime.setText("⏱ " + fromTime + "\n    " + toTime);
             holder.descriptionOrPurpose.setText("✎ \"" + reservation.getPurpose() + "\"");
+
+            holder.reservationId = reservation.getId();
+            holder.position = position;
+
+            if (mAuth.getCurrentUser().getEmail().equals(reservation.getUserId())) holder.myReservationDeleteButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -114,6 +118,9 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
         TextView capacityOrUser;
         TextView remarksOrTime;
         TextView descriptionOrPurpose;
+        Button myReservationDeleteButton;
+        int reservationId;
+        int position;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -122,6 +129,37 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
             capacityOrUser = itemView.findViewById(R.id.capacity_or_user);
             remarksOrTime = itemView.findViewById(R.id.remarks_or_time);
             descriptionOrPurpose = itemView.findViewById(R.id.description_or_purpose);
+            myReservationDeleteButton = itemView.findViewById(R.id.myReservationDeleteButton);
+
+            myReservationDeleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(LOG_TAG, "onClick: DELETE");
+
+                    ReservationService reservationService = ApiUtils.getReservationService();
+                    Call<Void> deleteReservationCall = reservationService.deleteReservation(reservationId);
+                    deleteReservationCall.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                Log.d(LOG_TAG, String.valueOf(response.isSuccessful()));
+
+                                data.remove(position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position, data.size());
+                            } else {
+                                String message = "Problem " + response.code() + " " + response.message();
+                                Log.d(LOG_TAG, message);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e(LOG_TAG, t.getMessage());
+                        }
+                    });
+                }
+            });
         }
     }
 }

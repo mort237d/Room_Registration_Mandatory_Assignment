@@ -7,12 +7,26 @@
     tools:context=".SingleRoomActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/singleRoomHeadingTextview"
-        android:layout_gravity="center"
-        android:text="TextView"/>
+        android:text="Pick datetime"
+        android:onClick="DatePicker"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ToggleButton
+            android:id="@+id/bookedToggleButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textOn="not booked"
+            android:textOff="booked"
+            android:onClick="Booked"/>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/singleRoomRecyclerView"

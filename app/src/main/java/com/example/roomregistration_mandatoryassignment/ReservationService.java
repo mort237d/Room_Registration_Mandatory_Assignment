@@ -24,28 +24,28 @@ public interface ReservationService{
     Call<Reservation> getReservation(@Path("id") int id);
 
     @DELETE("Reservations/{id}")
-    Call<Reservation> deleteReservation(@Path("id") int id);
+    Call<Void> deleteReservation(@Path("id") int id);
 
     @GET("Reservations/room/{roomId}")
     Call<List<Reservation>> getReservationsByRoomId(@Path("roomId") int roomId);
 
     @GET("Reservations/user/{userId}/{roomId}")
-    Call<Reservation> getReservationsByUserIdAndRoomId(@Path("userId") String userId,
-                                                       @Path("roomId") String roomId);
+    Call<List<Reservation>> getReservationsByUserIdAndRoomId(@Path("userId") String userId,
+                                                       @Path("roomId") int roomId);
 
     @GET("Reservations/room/{roomId}/{fromTime}/{toTime}")
-    Call<Reservation> getReservationsByUserIdAndFromTimeToTime(@Path("roomId") String roomId,
+    Call<List<Reservation>> getReservationsByUserIdAndFromTimeToTime(@Path("roomId") int roomId,
                                                                @Path("fromTime") int fromTime,
                                                                @Path("toTime") int toTime);
 
     @GET("Reservations/room/{roomId}/{fromTime}")
-    Call<Reservation> getReservationsByRoomIdAndFromTime(@Path("roomId") String roomId,
+    Call<List<Reservation>> getReservationsByRoomIdAndFromTime(@Path("roomId") int roomId,
                                                          @Path("fromTime") int fromTime);
 
     @GET("Reservations/user/{userId}")
     Call<List<Reservation>> getReservationsByUserId(@Path("userId") String userId);
 
     @GET("Reservations/user/{userId}/{fromTime}")
-    Call<Reservation> getReservationsByUserIdAndFromTime(@Path("userId") String userId,
+    Call<List<Reservation>> getReservationsByUserIdAndFromTime(@Path("userId") String userId,
                                                          @Path("fromTime") int fromTime);
 }
