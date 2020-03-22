@@ -7,31 +7,12 @@
     tools:context=".AddReservationActivity"
     android:orientation="vertical">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/datePickerButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/datePickerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pick date"
-            android:onClick="DatePicker"
-            android:layout_weight="1"/>
-        <Button
-            android:id="@+id/fromTimePickerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pick fromTime"
-            android:onClick="TimePicker"
-            android:layout_weight="1"/>
-        <Button
-            android:id="@+id/toTimePickerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pick toTime"
-            android:onClick="TimePicker"
-            android:layout_weight="1"/>
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="@string/pick_date"
+        android:onClick="DatePicker"/>
 
     <TextView
         android:id="@+id/currentDateTextview"
@@ -42,7 +23,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Building"/>
+        android:text="@string/pick_building"
+        style="@style/addReservationTitleTextView"/>
     <Spinner
         android:id="@+id/spinnerBuilding"
         android:layout_width="match_parent"
@@ -52,7 +34,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Room"/>
+        android:text="@string/pick_room"
+        style="@style/addReservationTitleTextView"/>
     <Spinner
         android:id="@+id/spinnerRoom"
         android:layout_width="match_parent"
@@ -61,35 +44,44 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FromTime"/>
-    <Spinner
-        android:id="@+id/spinnerFromTime"
+        android:text="@string/pick_time"
+        style="@style/addReservationTitleTextView"/>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <Spinner
+            android:id="@+id/spinnerFromTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.4"
+            android:text="-->"
+            android:textAlignment="center"/>
+        <Spinner
+            android:id="@+id/spinnerToTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ToTime"/>
-    <Spinner
-        android:id="@+id/spinnerToTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Purpose"/>
+        android:text="@string/purpose"
+        style="@style/addReservationTitleTextView"/>
     <EditText
         android:id="@+id/purposeEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Write your purpose"/>
+        android:hint="@string/purpose"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Reservation"
+        android:text="@string/add_reservation"
         android:onClick="AddReservationClick"/>
 
 </LinearLayout>

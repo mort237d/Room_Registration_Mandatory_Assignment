@@ -15,7 +15,7 @@
         <activity android:name=".AddReservationActivity"></activity>
         <activity
             android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
+            android:label="Main2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SingleRoomActivity" />
         <activity
@@ -23,7 +23,7 @@
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"
+            android:label="Main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.login.LoginActivity"

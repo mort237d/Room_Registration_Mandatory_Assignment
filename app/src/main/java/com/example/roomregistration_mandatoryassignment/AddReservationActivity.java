@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,12 +45,17 @@ public class AddReservationActivity extends AppCompatActivity {
     private Spinner toTimesListSpinner;
     private Spinner roomsListSpinner;
     private EditText purposeEditText;
-    private TextView currentDateTextview;
+    public static TextView currentDateTextview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reservation);
+
+        final Calendar c = Calendar.getInstance();
+        staticYear = c.get(Calendar.YEAR);
+        staticMonth = c.get(Calendar.MONTH);
+        staticDayOfMonth = c.get(Calendar.DAY_OF_MONTH);
 
         buildingsListSpinner = findViewById(R.id.spinnerBuilding);
         fromTimesListSpinner = findViewById(R.id.spinnerFromTime);
@@ -58,9 +64,9 @@ public class AddReservationActivity extends AppCompatActivity {
         purposeEditText = findViewById(R.id.purposeEditText);
         currentDateTextview = findViewById(R.id.currentDateTextview);
 
-        currentDateTextview.setText("Current date: " + staticYear + "-" + staticMonth + "-" + staticDayOfMonth); //TODO make year and so on the days date
+        currentDateTextview.setText(getResources().getString(R.string.current_date) + " " + staticYear + "-" + staticMonth + "-" + staticDayOfMonth); //TODO make year and so on the days date
 
-        getSupportActionBar().setTitle("Add new reservation");
+        getSupportActionBar().setTitle(getResources().getString(R.string.add_new_reservation));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SpinnerInit();
@@ -81,7 +87,7 @@ public class AddReservationActivity extends AppCompatActivity {
 
     private void SpinnerInit(){
         String[] buildings = new String[]{
-                "Select a building...",
+                getResources().getString(R.string.select_building),
                 "A",
                 "B",
                 "C",
@@ -95,7 +101,7 @@ public class AddReservationActivity extends AppCompatActivity {
         getAndShowAllRoomsInSpinner();
 
         String[] times = new String[]{
-                "Select a time...",
+                getResources().getString(R.string.select_time),
                 "9:00",
                 "10:00",
                 "11:00",
@@ -192,8 +198,6 @@ public class AddReservationActivity extends AppCompatActivity {
         ReservationService reservationService = ApiUtils.getReservationService();
 
         Reservation reservation = new Reservation();
-        /*reservation.setFromTime(tsToSec8601("2020-03-22T00:" + fromTimesListSpinner.getSelectedItem().toString()));
-        reservation.setToTime(tsToSec8601("2020-03-22T00:" + toTimesListSpinner.getSelectedItem().toString()));*/
         Log.d(TAG, "AddReservationClick: " + staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString());
         reservation.setFromTime(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString()));
         reservation.setToTime(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + toTimesListSpinner.getSelectedItem().toString()));

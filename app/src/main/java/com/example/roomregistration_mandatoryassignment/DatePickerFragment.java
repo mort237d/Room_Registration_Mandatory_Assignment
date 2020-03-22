@@ -9,6 +9,8 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
+import static com.example.roomregistration_mandatoryassignment.AddReservationActivity.currentDateTextview;
+
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     @Override
@@ -27,12 +29,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        /*SingleRoomActivity.year = year;
-        SingleRoomActivity.month = month;
-        SingleRoomActivity.day = dayOfMonth;*/
-
         this.staticYear = year;
         this.staticMonth = month;
         this.staticDayOfMonth = dayOfMonth;
+
+        currentDateTextview.setText(getResources().getString(R.string.current_date) + " " + staticYear + "-" + staticMonth + "-" + staticDayOfMonth);
     }
 }

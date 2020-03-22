@@ -15,4 +15,17 @@
     <string name="title_activity_settings">Indstillinger</string>
     <string name="messages_header">Beskeder</string>
     <string name="sign_out">Log ud</string>
+    <string name="current_date">"Nuværende dato: "</string>
+    <string name="pick_date">Vælg dato</string>
+    <string name="tab_text_1">Ikke booket</string>
+    <string name="tab_text_2">Booket</string>
+    <string name="pick_building">Bygning</string>
+    <string name="pick_room">Rum</string>
+    <string name="pick_time">Tid</string>
+    <string name="purpose">Hensigt</string>
+    <string name="write_purpose">Skriv din hensigt</string>
+    <string name="add_reservation">Tilføj Reservation</string>
+    <string name="select_time">Vælg en tid...</string>
+    <string name="select_building">Vælg en bygning...</string>
+    <string name="add_new_reservation">Tilføj ny reservation</string>
 </resources>

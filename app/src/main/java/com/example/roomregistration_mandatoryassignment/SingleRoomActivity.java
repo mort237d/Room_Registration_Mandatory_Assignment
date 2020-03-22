@@ -13,7 +13,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -23,7 +22,6 @@ import retrofit2.Response;
 public class SingleRoomActivity extends AppCompatActivity{
 
     public static final String ROOM = "ROOM";
-    private static final String LOG_TAG = "MYROOMS";
     private static final String TAG = "SingleRoomTag";
     private Room originalRoom;
     private RecyclerView recyclerView;
@@ -83,12 +81,8 @@ public class SingleRoomActivity extends AppCompatActivity{
 
     private void getAndShowAllReservationsForDate() {
         ReservationService reservationService = ApiUtils.getReservationService();
-        Calendar c = Calendar.getInstance();
-        c.set(year, month, day);
 
-        long unixTime = c.getTimeInMillis();
-        Log.d(TAG, "getAndShowAllReservationsForDate: " + day + " | " + unixTime);
-        Call<List<Reservation>> getAllReservationsCall = reservationService.getReservationsByRoomIdAndFromTime(originalRoom.getId(), (int) unixTime);
+        Call<List<Reservation>> getAllReservationsCall = reservationService.getReservationsByRoomIdAndFromTime(originalRoom.getId(), 1234); //TODO set real from time (unix)
         getAllReservationsCall.enqueue(new Callback<List<Reservation>>() {
             @Override
             public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
@@ -124,10 +118,6 @@ public class SingleRoomActivity extends AppCompatActivity{
         ToggleButton toggleButton = findViewById(R.id.bookedToggleButton);
         Log.d(TAG, "Booked: " + view.isSelected());
     }
-
-    public static int year;
-    public static int month;
-    public static int day;
 
     public void DatePicker(View view) {
         Log.d(TAG, "DatePicker: ");
