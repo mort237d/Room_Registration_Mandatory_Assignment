@@ -79,6 +79,8 @@ public class SingleRoomActivity extends AppCompatActivity{
         });
     }
 
+    public static List<Reservation> allReservations;
+
     private void getAndShowAllReservationsForDate() {
         ReservationService reservationService = ApiUtils.getReservationService();
         Calendar c = Calendar.getInstance();
@@ -91,7 +93,7 @@ public class SingleRoomActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
                 if (response.isSuccessful()) {
-                    List<Reservation> allReservations = response.body();
+                    allReservations = response.body();
                     Log.d(TAG, allReservations.toString());
 
                     populateRecyclerView(allReservations);
@@ -108,10 +110,12 @@ public class SingleRoomActivity extends AppCompatActivity{
         });
     }
 
+    public static RecyclerViewSimpleAdapter singleRoomAdapter;
+
     private void populateRecyclerView(List<Reservation> allReservations) {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerViewSimpleAdapter adapter = new RecyclerViewSimpleAdapter(this, allReservations);
-        recyclerView.setAdapter(adapter);
+        singleRoomAdapter = new RecyclerViewSimpleAdapter(this, allReservations);
+        recyclerView.setAdapter(singleRoomAdapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

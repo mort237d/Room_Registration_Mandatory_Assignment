@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +30,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.roomregistration_mandatoryassignment.DatePickerFragment.staticDayOfMonth;
+import static com.example.roomregistration_mandatoryassignment.DatePickerFragment.staticMonth;
+import static com.example.roomregistration_mandatoryassignment.DatePickerFragment.staticYear;
 import static com.example.roomregistration_mandatoryassignment.ui.login.LoginActivity.mAuth;
 
 public class AddReservationActivity extends AppCompatActivity {
@@ -40,6 +44,7 @@ public class AddReservationActivity extends AppCompatActivity {
     private Spinner toTimesListSpinner;
     private Spinner roomsListSpinner;
     private EditText purposeEditText;
+    private TextView currentDateTextview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,9 @@ public class AddReservationActivity extends AppCompatActivity {
         toTimesListSpinner = findViewById(R.id.spinnerToTime);
         roomsListSpinner = findViewById(R.id.spinnerRoom);
         purposeEditText = findViewById(R.id.purposeEditText);
+        currentDateTextview = findViewById(R.id.currentDateTextview);
+
+        currentDateTextview.setText("Current date: " + staticYear + "-" + staticMonth + "-" + staticDayOfMonth); //TODO make year and so on the days date
 
         getSupportActionBar().setTitle("Add new reservation");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -184,8 +192,11 @@ public class AddReservationActivity extends AppCompatActivity {
         ReservationService reservationService = ApiUtils.getReservationService();
 
         Reservation reservation = new Reservation();
-        reservation.setFromTime(tsToSec8601(fromTimesListSpinner.getSelectedItem().toString()));
-        reservation.setToTime(tsToSec8601(toTimesListSpinner.getSelectedItem().toString()));
+        /*reservation.setFromTime(tsToSec8601("2020-03-22T00:" + fromTimesListSpinner.getSelectedItem().toString()));
+        reservation.setToTime(tsToSec8601("2020-03-22T00:" + toTimesListSpinner.getSelectedItem().toString()));*/
+        Log.d(TAG, "AddReservationClick: " + staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString());
+        reservation.setFromTime(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString()));
+        reservation.setToTime(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + toTimesListSpinner.getSelectedItem().toString()));
         reservation.setRoomId(roomIds.get(roomsListSpinner.getSelectedItem().toString()));
         Log.d(TAG, "AddReservationClick: " + roomIds.get(roomsListSpinner.getSelectedItem().toString()));
         reservation.setUserId(mAuth.getCurrentUser().getEmail());
@@ -197,6 +208,8 @@ public class AddReservationActivity extends AppCompatActivity {
             public void onResponse(Call<Reservation> call, Response<Reservation> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: " + response.isSuccessful());
+                    //allReservations.add(reservation); //TODO make it work..... https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
+                    //singleRoomAdapter.notifyItemInserted(allReservations.size());
                 } else {
                     String message = "Problem " + response.code() + " " + response.message();
                     Log.w(TAG, message);
@@ -215,12 +228,22 @@ public class AddReservationActivity extends AppCompatActivity {
     public static Integer tsToSec8601(String timestamp){
         if(timestamp == null) return null;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
             Date dt = sdf.parse(timestamp);
             long epoch = dt.getTime();
             return (int)(epoch/1000);
         } catch(ParseException e) {
             return null;
         }
+    }
+
+    public void TimePicker(View view) {
+        Log.d(TAG, "TimePicker: ");
+    }
+
+    public void DatePicker(View view) {
+        Log.d(TAG, "DatePicker: ");
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 }

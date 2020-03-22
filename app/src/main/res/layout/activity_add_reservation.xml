@@ -7,6 +7,38 @@
     tools:context=".AddReservationActivity"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/datePickerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pick date"
+            android:onClick="DatePicker"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/fromTimePickerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pick fromTime"
+            android:onClick="TimePicker"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/toTimePickerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pick toTime"
+            android:onClick="TimePicker"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/currentDateTextview"
+        android:text="Current date: "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

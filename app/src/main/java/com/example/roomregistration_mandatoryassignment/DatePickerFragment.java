@@ -21,10 +21,18 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
+    public static int staticYear;
+    public static int staticMonth;
+    public static int staticDayOfMonth;
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        SingleRoomActivity.year = year;
+        /*SingleRoomActivity.year = year;
         SingleRoomActivity.month = month;
-        SingleRoomActivity.day = dayOfMonth;
+        SingleRoomActivity.day = dayOfMonth;*/
+
+        this.staticYear = year;
+        this.staticMonth = month;
+        this.staticDayOfMonth = dayOfMonth;
     }
 }
