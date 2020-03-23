@@ -15,20 +15,11 @@
         android:onClick="DatePicker"
         android:layout_alignParentTop="true"/>
 
-    <ToggleButton
-        android:id="@+id/bookedToggleButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textOn="not booked"
-        android:textOff="booked"
-        android:onClick="Booked"
-        android:layout_below="@+id/datePickerButton"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/singleRoomRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/bookedToggleButton"/>
+        android:layout_below="@+id/datePickerButton"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"

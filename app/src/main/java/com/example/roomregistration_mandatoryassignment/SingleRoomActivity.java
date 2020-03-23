@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -112,11 +111,6 @@ public class SingleRoomActivity extends AppCompatActivity{
         recyclerView.setAdapter(singleRoomAdapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    public void Booked(View view) {
-        ToggleButton toggleButton = findViewById(R.id.bookedToggleButton);
-        Log.d(TAG, "Booked: " + view.isSelected());
     }
 
     public void DatePicker(View view) {

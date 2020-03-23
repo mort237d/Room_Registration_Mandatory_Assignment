@@ -34,7 +34,7 @@ import retrofit2.Response;
 import static com.example.roomregistration_mandatoryassignment.DatePickerFragment.staticDayOfMonth;
 import static com.example.roomregistration_mandatoryassignment.DatePickerFragment.staticMonth;
 import static com.example.roomregistration_mandatoryassignment.DatePickerFragment.staticYear;
-import static com.example.roomregistration_mandatoryassignment.ui.login.LoginActivity.mAuth;
+import static com.example.roomregistration_mandatoryassignment.MainActivity.currentUser;
 
 public class AddReservationActivity extends AppCompatActivity {
 
@@ -203,7 +203,7 @@ public class AddReservationActivity extends AppCompatActivity {
         reservation.setToTime(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + toTimesListSpinner.getSelectedItem().toString()));
         reservation.setRoomId(roomIds.get(roomsListSpinner.getSelectedItem().toString()));
         Log.d(TAG, "AddReservationClick: " + roomIds.get(roomsListSpinner.getSelectedItem().toString()));
-        reservation.setUserId(mAuth.getCurrentUser().getEmail());
+        reservation.setUserId(currentUser.getEmail());
         reservation.setPurpose(purposeEditText.getText().toString());
 
         Call<Reservation> postReservation = reservationService.postReservation(reservation);

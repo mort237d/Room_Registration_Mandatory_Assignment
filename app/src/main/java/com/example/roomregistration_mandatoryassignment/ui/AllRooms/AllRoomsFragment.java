@@ -2,7 +2,9 @@ package com.example.roomregistration_mandatoryassignment.ui.AllRooms;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,17 +28,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AllRoomsFragment extends Fragment {
+public class AllRoomsFragment extends Fragment implements GestureDetector.OnGestureListener {
 
-    private AllRoomsViewModel allRoomsViewModel;
     private RecyclerView recyclerView;
-    private View root;
 
     private final String TAG = "MYTAG";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        allRoomsViewModel = ViewModelProviders.of(this).get(AllRoomsViewModel.class);
-        root = inflater.inflate(R.layout.fragment_all_rooms, container, false);
+        AllRoomsViewModel allRoomsViewModel = ViewModelProviders.of(this).get(AllRoomsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_all_rooms, container, false);
         recyclerView = root.findViewById(R.id.mainRecyclerView);
         allRoomsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -78,5 +78,39 @@ public class AllRoomsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        Log.d(TAG, "onDown: ");
+        return true;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+        Log.d(TAG, "onShowPress: ");
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        Log.d(TAG, "onSingleTapUp: ");
+        return true;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        Log.d(TAG, "onScroll: ");
+        return true;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+        Log.d(TAG, "onLongPress: ");
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        Log.d(TAG, "onFling: ");
+        return true;
     }
 }

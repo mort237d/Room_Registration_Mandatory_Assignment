@@ -5,11 +5,11 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/book_room"
             android:icon="@drawable/ic_playlist_add_black_24dp"
             android:title="@string/menu_book_a_room" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/my_reservations"
             android:icon="@drawable/ic_playlist_add_check_black_24dp"
             android:title="@string/menu_my_reserved_rooms" />
     </group>

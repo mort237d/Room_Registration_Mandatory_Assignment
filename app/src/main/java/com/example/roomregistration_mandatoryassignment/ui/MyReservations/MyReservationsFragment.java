@@ -26,19 +26,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.roomregistration_mandatoryassignment.ui.login.LoginActivity.mAuth;
-
 public class MyReservationsFragment extends Fragment {
 
     private static final String TAG = "MYTAG";
-    private MyReservationsViewModel myReservationsViewModel;
-    private View root;
     private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myReservationsViewModel =
-                ViewModelProviders.of(this).get(MyReservationsViewModel.class);
-        root = inflater.inflate(R.layout.fragment_my_reservations, container, false);
+        MyReservationsViewModel myReservationsViewModel = ViewModelProviders.of(this).get(MyReservationsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_my_reservations, container, false);
         recyclerView = root.findViewById(R.id.myReservationsRecyclerView);
         myReservationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -59,7 +54,7 @@ public class MyReservationsFragment extends Fragment {
 
     private void getAndShowAllReservationsForUser() {
         ReservationService reservationService = ApiUtils.getReservationService();
-        Call<List<Reservation>> getAllReservationsCall = reservationService.getReservationsByUserId(mAuth.getCurrentUser().getEmail().toString());
+        Call<List<Reservation>> getAllReservationsCall = reservationService.getReservationsByUserId("mort237d@edu.easj.dk");
         getAllReservationsCall.enqueue(new Callback<List<Reservation>>() {
             @Override
             public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {

@@ -21,7 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.roomregistration_mandatoryassignment.ui.login.LoginActivity.mAuth;
+import static com.example.roomregistration_mandatoryassignment.MainActivity.currentUser;
 
 public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerViewSimpleAdapter<T>.ViewHolder> {
     private static final String LOG_TAG = "RECYCLERVIEWADAPTER";
@@ -101,7 +101,7 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
             holder.reservationId = reservation.getId();
             holder.position = position;
 
-            if (mAuth.getCurrentUser().getEmail().equals(reservation.getUserId())) holder.myReservationDeleteButton.setVisibility(View.VISIBLE);
+            if (currentUser.getEmail().equals(reservation.getUserId())) holder.myReservationDeleteButton.setVisibility(View.VISIBLE);
         }
     }
 
