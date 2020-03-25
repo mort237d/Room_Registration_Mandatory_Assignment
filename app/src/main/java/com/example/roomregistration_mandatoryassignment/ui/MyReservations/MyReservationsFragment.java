@@ -28,7 +28,7 @@ import retrofit2.Response;
 
 public class MyReservationsFragment extends Fragment {
 
-    private static final String TAG = "MYTAG";
+    private final String TAG = this.getClass().getSimpleName();
     private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

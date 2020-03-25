@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
 
     public static final String EMAIL = "EMAIL";
-    final String TAG = "MYTAG";
+    final String TAG = this.getClass().getSimpleName();
 
     private EditText usernameEditText;
     private EditText passwordEditText;

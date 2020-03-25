@@ -30,7 +30,7 @@ public class AllRoomsFragment extends Fragment{
 
     private RecyclerView recyclerView;
 
-    private final String TAG = "MYTAG";
+    private final String TAG = this.getClass().getSimpleName();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         AllRoomsViewModel allRoomsViewModel = ViewModelProviders.of(this).get(AllRoomsViewModel.class);

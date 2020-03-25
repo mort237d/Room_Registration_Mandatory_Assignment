@@ -38,7 +38,7 @@ import static com.example.roomregistration_mandatoryassignment.MainActivity.curr
 
 public class AddReservationActivity extends AppCompatActivity {
 
-    private static final String TAG = "AddReservationActivity";
+    private final String TAG = this.getClass().getSimpleName();
 
     private Spinner buildingsListSpinner;
     private Spinner fromTimesListSpinner;

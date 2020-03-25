@@ -24,7 +24,7 @@ import retrofit2.Response;
 import static com.example.roomregistration_mandatoryassignment.MainActivity.currentUser;
 
 public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerViewSimpleAdapter<T>.ViewHolder> {
-    private static final String LOG_TAG = "RECYCLERVIEWADAPTER";
+    private final String TAG = this.getClass().getSimpleName();
     private final List<T> data;
     private final int viewId = View.generateViewId();
 
@@ -33,13 +33,11 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
     public RecyclerViewSimpleAdapter(Context mContext, List<T> data) {
         this.mContext = mContext;
         this.data = data;
-        //Log.d(LOG_TAG, data.toString());
     }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
-        Log.d(LOG_TAG, view.toString());
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -59,13 +57,9 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
             holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(LOG_TAG, "onClick: " + data.get(position));
-
                     Room room = (Room) data.get(position);
-                    Log.d(LOG_TAG, room.toString());
                     Intent intent = new Intent(v.getContext(), SingleRoomActivity.class);
                     intent.putExtra(SingleRoomActivity.ROOM, room);
-                    Log.d(LOG_TAG, "putExtra " + room.toString());
                     mContext.startActivity(intent);
                 }
             });
@@ -79,13 +73,19 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
 
                 @Override
                 public void onResponse(Call<Room> call, Response<Room> response) {
-                    Room room = response.body();
-                    holder.roomName.setText("Reservation of " + room.getName());
+                    if (response.isSuccessful()) {
+                        Log.d(TAG, "onResponse: ");
+                        Room room = response.body();
+                        holder.roomName.setText("Reservation of " + room.getName());
+                    } else {
+                        String message = "Problem " + response.code() + " " + response.message();
+                        Log.w(TAG, message);
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<Room> call, Throwable t) {
-                    Log.e(LOG_TAG, "onFailure: ");
+                    Log.e(TAG, "onFailure: ");
                 }
             });
 
@@ -108,7 +108,7 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
     @Override
     public int getItemCount() {
         int count = data.size();
-        Log.d(LOG_TAG, "getItemCount called: " + count);
+        Log.d(TAG, "getItemCount called: " + count);
         return count;
     }
 
@@ -134,7 +134,7 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
             myReservationDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(LOG_TAG, "onClick: DELETE");
+                    Log.d(TAG, "onClick: DELETE");
 
                     ReservationService reservationService = ApiUtils.getReservationService();
                     Call<Void> deleteReservationCall = reservationService.deleteReservation(reservationId);
@@ -142,20 +142,20 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
-                                Log.d(LOG_TAG, "onResponse DELETE: " + String.valueOf(response.isSuccessful()));
+                                Log.d(TAG, "onResponse DELETE: " + String.valueOf(response.isSuccessful()));
 
                                 data.remove(position);
                                 notifyItemRemoved(position);
                                 notifyItemRangeChanged(position, data.size());
                             } else {
                                 String message = "Problem " + response.code() + " " + response.message();
-                                Log.d(LOG_TAG, message);
+                                Log.w(TAG, message);
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
-                            Log.e(LOG_TAG, t.getMessage());
+                            Log.e(TAG, t.getMessage());
                         }
                     });
                 }

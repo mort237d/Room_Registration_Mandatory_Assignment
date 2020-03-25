@@ -21,7 +21,7 @@ import retrofit2.Response;
 public class SingleRoomActivity extends AppCompatActivity{
 
     public static final String ROOM = "ROOM";
-    private static final String TAG = "SingleRoomTag";
+    private final String TAG = this.getClass().getSimpleName();
     private Room originalRoom;
     private RecyclerView recyclerView;
 
@@ -65,7 +65,7 @@ public class SingleRoomActivity extends AppCompatActivity{
                     populateRecyclerView(allReservations);
                 } else {
                     String message = "Problem " + response.code() + " " + response.message();
-                    Log.d(TAG, message);
+                    Log.w(TAG, message);
                 }
             }
 
@@ -92,7 +92,7 @@ public class SingleRoomActivity extends AppCompatActivity{
                     populateRecyclerView(allReservations);
                 } else {
                     String message = "Problem " + response.code() + " " + response.message();
-                    Log.d(TAG, message);
+                    Log.w(TAG, message);
                 }
             }
 
@@ -114,7 +114,6 @@ public class SingleRoomActivity extends AppCompatActivity{
     }
 
     public void DatePicker(View view) {
-        Log.d(TAG, "DatePicker: ");
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
 
