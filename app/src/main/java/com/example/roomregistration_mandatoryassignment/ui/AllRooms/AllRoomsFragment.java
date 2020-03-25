@@ -2,9 +2,7 @@ package com.example.roomregistration_mandatoryassignment.ui.AllRooms;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AllRoomsFragment extends Fragment implements GestureDetector.OnGestureListener {
+public class AllRoomsFragment extends Fragment{
 
     private RecyclerView recyclerView;
 
@@ -78,39 +76,5 @@ public class AllRoomsFragment extends Fragment implements GestureDetector.OnGest
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    }
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        Log.d(TAG, "onDown: ");
-        return true;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-        Log.d(TAG, "onShowPress: ");
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        Log.d(TAG, "onSingleTapUp: ");
-        return true;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        Log.d(TAG, "onScroll: ");
-        return true;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-        Log.d(TAG, "onLongPress: ");
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        Log.d(TAG, "onFling: ");
-        return true;
     }
 }
