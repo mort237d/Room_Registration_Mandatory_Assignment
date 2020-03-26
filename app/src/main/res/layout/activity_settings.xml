@@ -49,6 +49,7 @@
         <EditText
             android:hint="@string/color"
             android:layout_width="100dp"
+            android:maxLength="7"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"

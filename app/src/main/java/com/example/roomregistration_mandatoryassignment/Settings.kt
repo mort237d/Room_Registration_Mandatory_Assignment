@@ -26,12 +26,12 @@ class Settings : AppCompatActivity(), GestureDetector.OnGestureListener, Gesture
 
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
         Log.d(TAG, "onSingleTapUp")
-        return true
+        return false
     }
 
     override fun onDown(e: MotionEvent?): Boolean {
         Log.d(TAG, "onDown")
-        return true
+        return false
     }
 
     override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
@@ -48,7 +48,7 @@ class Settings : AppCompatActivity(), GestureDetector.OnGestureListener, Gesture
 
     override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
         Log.d(TAG, "onScroll")
-        return true
+        return false
     }
 
     override fun onLongPress(e: MotionEvent?) {
@@ -57,17 +57,17 @@ class Settings : AppCompatActivity(), GestureDetector.OnGestureListener, Gesture
 
     override fun onDoubleTap(e: MotionEvent?): Boolean {
         Log.d(TAG, "onDoubleTap")
-        return true
+        return false
     }
 
     override fun onDoubleTapEvent(e: MotionEvent?): Boolean {
         Log.d(TAG, "onDoubleTapEvent")
-        return true
+        return false
     }
 
     override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
         Log.d(TAG, "onSingleTapConfirmed")
-        return true
+        return false
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {

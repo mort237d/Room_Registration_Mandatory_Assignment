@@ -43,4 +43,13 @@
     <string name="activate_settings">Activate Settings</string>
     <string name="primary_color">Primary color</string>
     <string name="color">#color</string>
+    <string name="must_fullfill">Room and times shall be choosen</string>
+    <string name="roomname" translatable="false">RoomName</string>
+    <string name="capacityoruser" translatable="false">CapacityOrUser</string>
+    <string name="remarksortime" translatable="false">RemarksOrTime</string>
+    <string name="descriptionorpurpose" translatable="false">DescriptionOrPurpose</string>
+    <string name="delete" translatable="false">DELETE</string>
+    <string name="arrow" translatable="false"><![CDATA[-->]]></string>
+    <string name="title" translatable="false">Title</string>
+    <string name="subtitle" translatable="false">Subtitle</string>
 </resources>

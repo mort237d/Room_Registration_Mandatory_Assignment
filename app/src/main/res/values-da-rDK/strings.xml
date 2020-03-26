@@ -34,4 +34,5 @@
     <string name="primary_color">Primær farve</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="color">#farve</string>
+    <string name="must_fullfill">Rum og tider skal udfyldes</string>
 </resources>

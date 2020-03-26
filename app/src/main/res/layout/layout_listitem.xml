@@ -16,14 +16,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_toRightOf="@+id/image"
+        android:layout_toEndOf="@+id/image"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="30dp">
+        android:layout_marginStart="30dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RoomName"
+            android:text="@string/roomname"
             android:id="@+id/room_name"
             android:textStyle="bold"
             style="@style/ItemListTextView"/>
@@ -31,21 +31,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CapacityOrUser"
+            android:text="@string/capacityoruser"
             android:id="@+id/capacity_or_user"
             style="@style/ItemListTextView"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RemarksOrTime"
+            android:text="@string/remarksortime"
             android:id="@+id/remarks_or_time"
             style="@style/ItemListTextView"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DescriptionOrPurpose"
+            android:text="@string/descriptionorpurpose"
             android:id="@+id/description_or_purpose"
             style="@style/ItemListTextView"/>
 
@@ -57,8 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:background="@color/colorWarningRed"
-        android:text="DELETE"
-        android:layout_marginRight="10dp"
+        android:text="@string/delete"
+        android:layout_marginEnd="10dp"
         android:layout_alignParentEnd="true"
         android:visibility="gone"/>
 

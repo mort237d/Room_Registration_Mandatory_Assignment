@@ -66,10 +66,7 @@ public class AddReservationActivity extends AppCompatActivity {
         purposeEditText = findViewById(R.id.purposeEditText);
         currentDateTextview = findViewById(R.id.currentDateTextview);
 
-        currentDateTextview.setText(getResources().getString(R.string.current_date) + " " + staticYear + "-" + staticMonth + "-" + staticDayOfMonth); //TODO make year and so on the days date
-
-        getSupportActionBar().setTitle(getResources().getString(R.string.add_new_reservation));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        currentDateTextview.setText(getResources().getString(R.string.current_date) + " " + staticYear + "-" + staticMonth + "-" + staticDayOfMonth);
 
         SpinnerInit();
     }
@@ -197,13 +194,17 @@ public class AddReservationActivity extends AppCompatActivity {
     }
 
     public void AddReservationClick(View view) {
-        ReservationService reservationService = ApiUtils.getReservationService();
+        if (fromTimesListSpinner.getSelectedItemId() == 0 || toTimesListSpinner.getSelectedItemId() == 0 || roomsListSpinner.getSelectedItemId() == 0){
+            Snackbar.make(view, R.string.must_fullfill, Snackbar.LENGTH_SHORT).show();
+        }
+        else {
+            ReservationService reservationService = ApiUtils.getReservationService();
 
-        Reservation reservation = new Reservation(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString()),
-                tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + toTimesListSpinner.getSelectedItem().toString()),
-                currentUser.getEmail(),
-                purposeEditText.getText().toString(),
-                roomIds.get(roomsListSpinner.getSelectedItem().toString()));
+            Reservation reservation = new Reservation(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString()),
+                    tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + toTimesListSpinner.getSelectedItem().toString()),
+                    currentUser.getEmail(),
+                    purposeEditText.getText().toString(),
+                    roomIds.get(roomsListSpinner.getSelectedItem().toString()));
         /*reservation.setFromTime(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString()));
         reservation.setToTime(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + toTimesListSpinner.getSelectedItem().toString()));
         reservation.setRoomId(roomIds.get(roomsListSpinner.getSelectedItem().toString()));
@@ -211,31 +212,32 @@ public class AddReservationActivity extends AppCompatActivity {
         reservation.setPurpose(purposeEditText.getText().toString());*/
 
 
-        Call<Integer> postReservation = reservationService.postReservation(reservation); //TODO fix error. only reaches onFailure
-        postReservation.enqueue(new Callback<Integer>() {
-            @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + String.valueOf(response.isSuccessful()));
-                    finishThisActivity();
-                } else {
-                    String message = "Problem " + response.code() + " " + response.message();
-                    Log.w(TAG, message);
+            Call<Integer> postReservation = reservationService.postReservation(reservation); //TODO fix error. only reaches onFailure
+            postReservation.enqueue(new Callback<Integer>() {
+                @Override
+                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    if (response.isSuccessful()) {
+                        Log.d(TAG, "onResponse: " + String.valueOf(response.isSuccessful()));
+                        finishThisActivity();
+                    } else {
+                        String message = "Problem " + response.code() + " " + response.message();
+                        Log.w(TAG, message);
 
-                    if (fromTimesListSpinner.getSelectedItemId() >= toTimesListSpinner.getSelectedItemId()){
-                        Snackbar.make(view, R.string.wrong_time_settings, Snackbar.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Snackbar.make(view, R.string.room_already_booked, Snackbar.LENGTH_SHORT).show();
+                        if (fromTimesListSpinner.getSelectedItemId() >= toTimesListSpinner.getSelectedItemId()){
+                            Snackbar.make(view, R.string.wrong_time_settings, Snackbar.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Snackbar.make(view, R.string.room_already_booked, Snackbar.LENGTH_SHORT).show();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
-                Log.e(TAG, "onFailure: ", t);
-            }
-        });
+                @Override
+                public void onFailure(Call<Integer> call, Throwable t) {
+                    Log.e(TAG, "onFailure: ", t);
+                }
+            });
+        }
     }
 
     private void finishThisActivity(){

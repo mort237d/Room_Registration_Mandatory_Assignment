@@ -8,9 +8,12 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -29,27 +32,24 @@ public class SingleRoomActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_room);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.singleRoomRecyclerView);
 
         Intent intent = getIntent();
         originalRoom = (Room) intent.getSerializableExtra(ROOM);
 
-        getSupportActionBar().setTitle(originalRoom.getName());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         getAndShowAllReservationsForRoom();
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void getAndShowAllReservationsForRoom() {
@@ -57,7 +57,7 @@ public class SingleRoomActivity extends AppCompatActivity{
         Call<List<Reservation>> getAllReservationsCall = reservationService.getReservationsByRoomId(originalRoom.getId());
         getAllReservationsCall.enqueue(new Callback<List<Reservation>>() {
             @Override
-            public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
+            public void onResponse(@NotNull Call<List<Reservation>> call, Response<List<Reservation>> response) {
                 if (response.isSuccessful()) {
                     List<Reservation> allReservations = response.body();
                     Log.d(TAG, allReservations.toString());
