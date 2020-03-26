@@ -26,7 +26,6 @@
     <string name="tab_text_1">Unbooked</string>
     <string name="tab_text_2">Booked</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="current_date">Current date:</string>
     <string name="pick_date">Pick date</string>
     <string name="pick_building">Building</string>

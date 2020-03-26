@@ -212,7 +212,7 @@ public class AddReservationActivity extends AppCompatActivity {
         reservation.setPurpose(purposeEditText.getText().toString());*/
 
 
-            Call<Integer> postReservation = reservationService.postReservation(reservation); //TODO fix error. only reaches onFailure
+            Call<Integer> postReservation = reservationService.postReservation(reservation);
             postReservation.enqueue(new Callback<Integer>() {
                 @Override
                 public void onResponse(Call<Integer> call, Response<Integer> response) {

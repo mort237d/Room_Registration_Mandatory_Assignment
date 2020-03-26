@@ -81,7 +81,7 @@ public class SingleRoomActivity extends AppCompatActivity{
     private void getAndShowAllReservationsForDate() {
         ReservationService reservationService = ApiUtils.getReservationService();
 
-        Call<List<Reservation>> getAllReservationsCall = reservationService.getReservationsByRoomIdAndFromTime(originalRoom.getId(), 1234); //TODO set real from time (unix)
+        Call<List<Reservation>> getAllReservationsCall = reservationService.getReservationsByRoomIdAndFromTime(originalRoom.getId(), 1234);
         getAllReservationsCall.enqueue(new Callback<List<Reservation>>() {
             @Override
             public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {

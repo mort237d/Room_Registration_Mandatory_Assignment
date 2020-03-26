@@ -153,7 +153,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + " " + model.getDisplayName();
-        // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -172,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText.setText("mort237d@edu.easj.dk");
         passwordEditText.setText("123456");
 
-        Button loginButton = findViewById(R.id.login); //TODO Remove these two lines
+        Button loginButton = findViewById(R.id.login); //TODO Remove these four lines
         loginButton.performClick();
     }
 }
