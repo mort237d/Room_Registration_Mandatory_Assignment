@@ -18,18 +18,10 @@
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="sign_out">Sign out</string>
     <string name="tab_text_1">Unbooked</string>
     <string name="tab_text_2">Booked</string>
@@ -43,9 +35,12 @@
     <string name="purpose">Purpose</string>
     <string name="write_purpose">Write your purpose</string>
     <string name="add_reservation">Add Reservation</string>
-    <string name="select_time">Select a time...</string>
-    <string name="select_building">Select a building...</string>
+    <string name="select_time">Select a time…</string>
+    <string name="select_building">Select a building…</string>
     <string name="add_new_reservation">Add new reservation</string>
     <string name="wrong_time_settings">The first time must be smaller then the second time</string>
     <string name="room_already_booked">The room is already booked for that date and time</string>
+    <string name="activate_settings">Activate Settings</string>
+    <string name="primary_color">Primary color</string>
+    <string name="color">#color</string>
 </resources>

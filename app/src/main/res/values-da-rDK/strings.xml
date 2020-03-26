@@ -25,9 +25,13 @@
     <string name="purpose">Hensigt</string>
     <string name="write_purpose">Skriv din hensigt</string>
     <string name="add_reservation">Tilføj Reservation</string>
-    <string name="select_time">Vælg en tid...</string>
-    <string name="select_building">Vælg en bygning...</string>
+    <string name="select_time">Vælg en tid…</string>
+    <string name="select_building">Vælg en bygning…</string>
     <string name="add_new_reservation">Tilføj ny reservation</string>
     <string name="wrong_time_settings">Den første tid skal være mindre en den anden tid</string>
     <string name="room_already_booked">Rummet er optaget for den dato og tid</string>
+    <string name="activate_settings">Aktiver indstillinger</string>
+    <string name="primary_color">Primær farve</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="color">#farve</string>
 </resources>
