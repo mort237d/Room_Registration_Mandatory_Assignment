@@ -46,4 +46,6 @@
     <string name="select_time">Select a time...</string>
     <string name="select_building">Select a building...</string>
     <string name="add_new_reservation">Add new reservation</string>
+    <string name="wrong_time_settings">The first time must be smaller then the second time</string>
+    <string name="room_already_booked">The room is already booked for that date and time</string>
 </resources>

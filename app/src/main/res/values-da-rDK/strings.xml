@@ -28,4 +28,6 @@
     <string name="select_time">Vælg en tid...</string>
     <string name="select_building">Vælg en bygning...</string>
     <string name="add_new_reservation">Tilføj ny reservation</string>
+    <string name="wrong_time_settings">Den første tid skal være mindre en den anden tid</string>
+    <string name="room_already_booked">Rummet er optaget for den dato og tid</string>
 </resources>

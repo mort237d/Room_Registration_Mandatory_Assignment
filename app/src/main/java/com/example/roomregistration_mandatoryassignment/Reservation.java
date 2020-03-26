@@ -25,6 +25,15 @@ public class Reservation implements Serializable {
     @Expose
     private Integer roomId;
 
+    public Reservation(Integer fromTime, Integer toTime, String userId, String purpose, Integer roomId) {
+        this.id = 0;
+        this.fromTime = fromTime;
+        this.toTime = toTime;
+        this.userId = userId;
+        this.purpose = purpose;
+        this.roomId = roomId;
+    }
+
     public Integer getId() {
         return id;
     }

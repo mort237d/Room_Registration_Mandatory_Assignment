@@ -84,4 +84,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddReservationActivity.class);
         startActivity(intent);
     }
+
+    public void MenuItemSettings(MenuItem item) {
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
+    }
 }

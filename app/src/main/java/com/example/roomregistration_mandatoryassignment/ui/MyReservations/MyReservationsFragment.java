@@ -26,6 +26,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.roomregistration_mandatoryassignment.MainActivity.currentUser;
+
 public class MyReservationsFragment extends Fragment {
 
     private final String TAG = this.getClass().getSimpleName();
@@ -49,12 +51,12 @@ public class MyReservationsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getAndShowAllReservationsForUser();
+        getAndShowAllReservationsForUser(); //TODO Optimize so it does not have to get all the information again
     }
 
     private void getAndShowAllReservationsForUser() {
         ReservationService reservationService = ApiUtils.getReservationService();
-        Call<List<Reservation>> getAllReservationsCall = reservationService.getReservationsByUserId("mort237d@edu.easj.dk");
+        Call<List<Reservation>> getAllReservationsCall = reservationService.getReservationsByUserId(currentUser.getEmail());
         getAllReservationsCall.enqueue(new Callback<List<Reservation>>() {
             @Override
             public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
@@ -83,6 +85,5 @@ public class MyReservationsFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
-
 
 }

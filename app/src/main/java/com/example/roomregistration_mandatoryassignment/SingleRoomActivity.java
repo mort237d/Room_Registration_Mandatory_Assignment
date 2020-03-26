@@ -125,4 +125,10 @@ public class SingleRoomActivity extends AppCompatActivity{
         intent.putExtra("EXTRA", originalRoom.getId());
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAndShowAllReservationsForDate(); //TODO Optimize so it does not have to get all the information again
+    }
 }

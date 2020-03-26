@@ -74,7 +74,6 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
                 @Override
                 public void onResponse(Call<Room> call, Response<Room> response) {
                     if (response.isSuccessful()) {
-                        Log.d(TAG, "onResponse: ");
                         Room room = response.body();
                         holder.roomName.setText("Reservation of " + room.getName());
                     } else {
@@ -108,7 +107,6 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
     @Override
     public int getItemCount() {
         int count = data.size();
-        Log.d(TAG, "getItemCount called: " + count);
         return count;
     }
 
@@ -134,16 +132,12 @@ public class RecyclerViewSimpleAdapter<T> extends RecyclerView.Adapter<RecyclerV
             myReservationDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "onClick: DELETE");
-
                     ReservationService reservationService = ApiUtils.getReservationService();
                     Call<Void> deleteReservationCall = reservationService.deleteReservation(reservationId);
                     deleteReservationCall.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
-                                Log.d(TAG, "onResponse DELETE: " + String.valueOf(response.isSuccessful()));
-
                                 data.remove(position);
                                 notifyItemRemoved(position);
                                 notifyItemRangeChanged(position, data.size());

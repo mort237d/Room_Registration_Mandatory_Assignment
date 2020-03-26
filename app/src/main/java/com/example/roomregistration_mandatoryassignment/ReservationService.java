@@ -22,7 +22,7 @@ public interface ReservationService{
 
     @Headers("Content-Type: application/json")
     @POST("Reservations")
-    Call<Reservation> postReservation(@Body Reservation reservation);
+    Call<Integer> postReservation(@Body Reservation reservation);
 
     @GET("Reservations/{id}")
     Call<Reservation> getReservation(@Path("id") int id);

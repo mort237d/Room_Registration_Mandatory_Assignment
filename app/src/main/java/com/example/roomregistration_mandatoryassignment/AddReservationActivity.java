@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -197,35 +199,46 @@ public class AddReservationActivity extends AppCompatActivity {
     public void AddReservationClick(View view) {
         ReservationService reservationService = ApiUtils.getReservationService();
 
-        Reservation reservation = new Reservation();
-        Log.d(TAG, "AddReservationClick: " + staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString());
-        reservation.setFromTime(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString()));
+        Reservation reservation = new Reservation(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString()),
+                tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + toTimesListSpinner.getSelectedItem().toString()),
+                currentUser.getEmail(),
+                purposeEditText.getText().toString(),
+                roomIds.get(roomsListSpinner.getSelectedItem().toString()));
+        /*reservation.setFromTime(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + fromTimesListSpinner.getSelectedItem().toString()));
         reservation.setToTime(tsToSec8601(staticYear + "-" + staticMonth + "-" + staticDayOfMonth + "T00:" + toTimesListSpinner.getSelectedItem().toString()));
         reservation.setRoomId(roomIds.get(roomsListSpinner.getSelectedItem().toString()));
-        Log.d(TAG, "AddReservationClick: " + roomIds.get(roomsListSpinner.getSelectedItem().toString()));
         reservation.setUserId(currentUser.getEmail());
-        reservation.setPurpose(purposeEditText.getText().toString());
+        reservation.setPurpose(purposeEditText.getText().toString());*/
 
-        Call<Reservation> postReservation = reservationService.postReservation(reservation);
-        postReservation.enqueue(new Callback<Reservation>() {
+
+        Call<Integer> postReservation = reservationService.postReservation(reservation); //TODO fix error. only reaches onFailure
+        postReservation.enqueue(new Callback<Integer>() {
             @Override
-            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + response.isSuccessful());
-                    //allReservations.add(reservation); //TODO make it work..... https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
-                    //singleRoomAdapter.notifyItemInserted(allReservations.size());
+                    Log.d(TAG, "onResponse: " + String.valueOf(response.isSuccessful()));
+                    finishThisActivity();
                 } else {
                     String message = "Problem " + response.code() + " " + response.message();
                     Log.w(TAG, message);
+
+                    if (fromTimesListSpinner.getSelectedItemId() >= toTimesListSpinner.getSelectedItemId()){
+                        Snackbar.make(view, R.string.wrong_time_settings, Snackbar.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Snackbar.make(view, R.string.room_already_booked, Snackbar.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<Reservation> call, Throwable t) {
-                Log.e(TAG, t.getMessage());
+            public void onFailure(Call<Integer> call, Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
             }
         });
+    }
 
+    private void finishThisActivity(){
         finish();
     }
 
@@ -239,10 +252,6 @@ public class AddReservationActivity extends AppCompatActivity {
         } catch(ParseException e) {
             return null;
         }
-    }
-
-    public void TimePicker(View view) {
-        Log.d(TAG, "TimePicker: ");
     }
 
     public void DatePicker(View view) {
