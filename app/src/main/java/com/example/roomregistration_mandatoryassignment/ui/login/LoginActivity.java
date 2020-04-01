@@ -168,10 +168,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        usernameEditText.setText("mort237d@edu.easj.dk");
+        /*usernameEditText.setText("mort237d@edu.easj.dk");
         passwordEditText.setText("123456");
 
         Button loginButton = findViewById(R.id.login); //TODO Remove these four lines
-        loginButton.performClick();
+        loginButton.performClick();*/
     }
 }
