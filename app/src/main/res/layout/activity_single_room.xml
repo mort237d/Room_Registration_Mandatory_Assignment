@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:text="@string/pick_date"
         android:onClick="DatePicker"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/singleRoomRecyclerView"
